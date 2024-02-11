@@ -26,3 +26,17 @@ export async function GET(req, res) {
     return NextResponse.json({ status: 400, message: error.message });
   }
 }
+
+
+export async function DELETE(req, res) {
+  await connectDB();
+  const { id } = await req.json();
+
+  try {
+    const topic = await Topic.findByIdAndDelete(id);                
+
+    return NextResponse.json({ data: topic, status: 201, message: "Topic deleted successfully"});
+    } catch (error) {                                           
+      return NextResponse.json({ status: 400, message: error.message });
+    }       
+}   
